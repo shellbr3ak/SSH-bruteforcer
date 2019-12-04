@@ -67,6 +67,7 @@ def is_ssh_open(hostname, username, password):
     except OSError:
         print(f"{RED} Make sure you have Internet Connection{RESET}")
         sys.exit(1)
+        
     else:
       
         # connection was established successfully
