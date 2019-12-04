@@ -44,7 +44,9 @@ def is_ssh_open(hostname, username, password):
     client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 
     try:
+      
         client.connect(hostname=hostname, username=username, password=password, timeout=3)
+        
     except socket.timeout:
 
         # this is when host is unreachable
