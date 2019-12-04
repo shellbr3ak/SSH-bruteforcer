@@ -1,0 +1,3 @@
+fabric, paramiko, colorama modules need to be installed via
+#Example:
+pip3 install ModuleName
